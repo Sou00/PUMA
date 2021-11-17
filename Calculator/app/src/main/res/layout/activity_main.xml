@@ -12,7 +12,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="160dp"
-        android:onClick="buttonClick"
+        android:onClick="deleteClick"
         android:text="C"
         app:layout_constraintStart_toEndOf="@+id/buttonDivision"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +23,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="205dp"
         android:layout_marginTop="160dp"
-        android:onClick="buttonClick"
+        android:onClick="operatorClick"
         android:text="/"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +33,7 @@
         android:layout_width="362dp"
         android:layout_height="94dp"
         android:text="0"
+        android:textSize="86sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.296"
@@ -59,7 +60,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:onClick="buttonClick"
+        android:onClick="operatorClick"
         android:text="X"
         app:layout_constraintStart_toEndOf="@+id/button9"
         app:layout_constraintTop_toBottomOf="@+id/buttonDelete" />
@@ -103,7 +104,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:onClick="buttonClick"
+        android:onClick="equalClick"
         android:text="="
         app:layout_constraintStart_toEndOf="@+id/buttonComa"
         app:layout_constraintTop_toBottomOf="@+id/buttonPlus" />
@@ -114,7 +115,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:onClick="buttonClick"
+        android:onClick="operatorClick"
         android:text="+"
         app:layout_constraintStart_toEndOf="@+id/button3"
         app:layout_constraintTop_toBottomOf="@+id/buttonMinus" />
@@ -147,7 +148,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:onClick="buttonClick"
+        android:onClick="commaClick"
         android:text=","
         app:layout_constraintStart_toEndOf="@+id/button0"
         app:layout_constraintTop_toBottomOf="@+id/button3" />
@@ -191,7 +192,7 @@
         android:layout_height="80dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:onClick="buttonClick"
+        android:onClick="operatorClick"
         android:text="-"
         app:layout_constraintStart_toEndOf="@+id/button6"
         app:layout_constraintTop_toBottomOf="@+id/buttonMult" />
