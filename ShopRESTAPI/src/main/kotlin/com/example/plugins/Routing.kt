@@ -1,6 +1,7 @@
 package com.example.plugins
 
 import com.example.*
+import com.example.Models.*
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.application.*
@@ -37,6 +38,7 @@ fun Application.configureRouting() {
                     Products.insert {
                         it[name] = product.name
                         it[desc] = product.desc
+                        it[price] = product.price
                     }
                 }
                 call.respondText("Product stored correctly", status = HttpStatusCode.Created)

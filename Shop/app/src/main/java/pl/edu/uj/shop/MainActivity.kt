@@ -12,9 +12,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun loginClicked(view: android.view.View) {
-        val login = findViewById<EditText>(R.id.editTextTextPersonName)
-        val password = findViewById<EditText>(R.id.editTextTextPassword)
-        val intent = Intent(this, ProductList::class.java)
+        val login = findViewById<EditText>(R.id.editTextPersonName)
+        val password = findViewById<EditText>(R.id.editTextPassword)
+        val intent = Intent(this, MainMenu::class.java)
         startActivity(intent)
     }
     fun registerClicked(view: android.view.View) {

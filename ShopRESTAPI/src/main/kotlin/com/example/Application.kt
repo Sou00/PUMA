@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.Models.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import com.example.plugins.*
@@ -29,6 +30,7 @@ object Products : Table(){
     val id: Column<Int> = integer("id").autoIncrement()
     val name: Column<String> = varchar("Name",255)
     val desc: Column<String> = text("Description")
+    val price: Column<Double> = double("Price")
 
     override val primaryKey = PrimaryKey(id,name = "PK_PRODUCTS_ID")
 
@@ -36,15 +38,11 @@ object Products : Table(){
         Product(
             id = row[id],
             name = row[name],
-            desc = row[desc]
+            desc = row[desc],
+            price = row[price]
         )
 }
 
-data class Product (
-    val id: Int,
-    val name: String,
-    val desc: String
-    )
 
 object Orders : Table(){
     val id: Column<Int> = integer("id")
@@ -63,12 +61,7 @@ object Orders : Table(){
         )
 }
 
-data class Order(
-    val id: Int,
-    val userId: Int,
-    val productId: Int,
-    val quantity: Int
-)
+
 
 
 object Users : Table(){
@@ -86,11 +79,7 @@ object Users : Table(){
         )
 }
 
-data class User(
-    val id: Int,
-    val name: String,
-    val age: Int,
-)
+
 
 object ContactInfos : Table(){
     val id: Column<Int> = integer("id").autoIncrement()
@@ -110,12 +99,7 @@ object ContactInfos : Table(){
 
 }
 
-data class ContactInfo(
-    val id: Int,
-    val name: String,
-    val number: String,
-    val address: String
-)
+
 
 object Questions : Table(){
     val id: Column<Int> = integer("id").autoIncrement()
@@ -133,8 +117,4 @@ object Questions : Table(){
 
 }
 
-data class Question(
-    val id: Int,
-    val title: String,
-    val response: String
-)
+

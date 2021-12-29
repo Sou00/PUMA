@@ -11,7 +11,7 @@ class Register : AppCompatActivity() {
     }
 
     fun registerClicked(view: android.view.View) {
-        val intent = Intent(this, ProductList::class.java)
+        val intent = Intent(this, MainMenu::class.java)
         startActivity(intent)
     }
     fun backClicked(view: android.view.View) {
