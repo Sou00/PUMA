@@ -9,7 +9,7 @@ class FAQList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_faqlist)
 
-        val listView = findViewById<ListView>(R.id.listview)
+        val listView = findViewById<ListView>(R.id.faqListView)
 
     }
 }

@@ -1,4 +1,4 @@
-package com.example.Models
+package pl.edu.uj.shop.Models
 
 data class Order(
     val id: Int,

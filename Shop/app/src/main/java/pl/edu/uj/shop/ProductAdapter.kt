@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.Models.Product
+import pl.edu.uj.shop.Models.Product
 
 class ProductAdapter (private val context: Context,
-                      private val dataSource: ArrayList<Product>) : BaseAdapter() {
+                      private val dataSource: List<Product>) : BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

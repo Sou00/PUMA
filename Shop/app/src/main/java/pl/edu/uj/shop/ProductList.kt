@@ -10,7 +10,7 @@ class ProductList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
 
-        val listView = findViewById<ListView>(R.id.listview)
+        val listView = findViewById<ListView>(R.id.productListView)
         var list = arrayListOf<Product>()
         val productAdapter = ProductAdapter(this, list)
         listView.adapter = productAdapter

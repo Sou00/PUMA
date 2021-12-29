@@ -9,7 +9,7 @@ class ContactList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contact_list)
 
-        val listView = findViewById<ListView>(R.id.listview)
+        val listView = findViewById<ListView>(R.id.contactListView)
 
     }
 }

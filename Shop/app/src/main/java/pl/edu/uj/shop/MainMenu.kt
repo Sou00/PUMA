@@ -27,4 +27,8 @@ class MainMenu : AppCompatActivity() {
         val intent = Intent(this, ContactList::class.java)
         startActivity(intent)
     }
+    fun cartClicked(view: android.view.View) {
+        val intent = Intent(this, ShoppingCart::class.java)
+        startActivity(intent)
+    }
 }
