@@ -20,7 +20,7 @@ fun main() {
         SchemaUtils.create(ContactInfos)
     }
 
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+    embeddedServer(Netty, port = 8081, host = "0.0.0.0") {
         configureRouting()
         configureSerialization()
     }.start(wait = true)
