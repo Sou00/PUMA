@@ -5,15 +5,15 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface FAQService {
-    @GET("product")
+    @GET("faq")
     fun getQuestions() : Call<List<Question>>
 
-    @GET("product/{id}")
+    @GET("faq/{id}")
     fun getQuestion(@Path("id") id: Int) : Call<Question>
 
-    @POST("product")
+    @POST("faq")
     fun createQuestion(@Body product: Question) : Call<Question>
 
-    @DELETE("product/{id}")
+    @DELETE("faq/{id}")
     fun deleteQuestion(@Path("id") id: Int) : Call<Question>
 }

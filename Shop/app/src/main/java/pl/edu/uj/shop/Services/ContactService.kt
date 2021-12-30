@@ -5,15 +5,15 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ContactService {
-    @GET("product")
+    @GET("contact")
     fun getContacts() : Call<List<ContactInfo>>
 
-    @GET("product/{id}")
+    @GET("contact/{id}")
     fun getContact(@Path("id") id: Int) : Call<ContactInfo>
 
-    @POST("product")
+    @POST("contact")
     fun createContact(@Body product: ContactInfo) : Call<ContactInfo>
 
-    @DELETE("product/{id}")
+    @DELETE("contact/{id}")
     fun deleteContact(@Path("id") id: Int) : Call<ContactInfo>
 }

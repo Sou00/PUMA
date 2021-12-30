@@ -5,15 +5,15 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface OrderService {
-    @GET("product")
+    @GET("order")
     fun getOrders() : Call<List<Order>>
 
-    @GET("product/{id}")
+    @GET("order/{id}")
     fun getOrder(@Path("id") id: Int) : Call<Order>
 
-    @POST("product")
+    @POST("order")
     fun createOrder(@Body product: Order) : Call<Order>
 
-    @DELETE("product/{id}")
+    @DELETE("order/{id}")
     fun deleteOrder(@Path("id") id: Int) : Call<Order>
 }
