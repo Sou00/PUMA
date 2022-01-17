@@ -1,16 +1,17 @@
-package pl.edu.uj.shop
+package pl.edu.uj.shop.Adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.ImageView
 import android.widget.TextView
-import pl.edu.uj.shop.Models.Product
+import pl.edu.uj.shop.R
+import pl.edu.uj.shop.RealmModels.RealmProduct
 
-class ProductAdapter (private val context: Context,
-                      private val dataSource: List<Product>) : BaseAdapter() {
+class ProductAdapter(private val context: Context,
+                     private val dataSource: List<RealmProduct>
+) : BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -31,16 +32,13 @@ class ProductAdapter (private val context: Context,
 
         val rowView = inflater.inflate(R.layout.list_item_product, parent, false)
 
-        val titleTextView = rowView.findViewById(R.id.recipe_list_title) as TextView
+        val titleTextView = rowView.findViewById(R.id.name) as TextView
 
-        val subtitleTextView = rowView.findViewById(R.id.recipe_list_subtitle) as TextView
+        val subtitleTextView = rowView.findViewById(R.id.description) as TextView
 
-        val detailTextView = rowView.findViewById(R.id.recipe_list_detail) as TextView
+        val detailTextView = rowView.findViewById(R.id.price) as TextView
 
-        val thumbnailImageView = rowView.findViewById(R.id.recipe_list_thumbnail) as ImageView
-
-
-        val product = getItem(position) as Product
+        val product = getItem(position) as RealmProduct
 
         titleTextView.text = product.name
         subtitleTextView.text = product.desc

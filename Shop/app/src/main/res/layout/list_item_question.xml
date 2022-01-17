@@ -5,42 +5,26 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-
     <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="2dp"
-        android:layout_marginStart="4dp"
-        android:maxLines="1"
-        android:paddingEnd="4dp"
-        android:textColor="#000000"
-        android:textSize="12sp"
-        tools:text="Price" />
-
-
-    <TextView
-        android:id="@+id/name"
+        android:id="@+id/question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:textSize="18sp"
-        tools:text="Name" />
+        tools:text="Question" />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/question"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="2dp"
+        android:layout_marginRight="8dp"
         android:ellipsize="end"
         android:maxLines="3"
         android:textSize="16sp"
-        tools:text="Desc" />
+        tools:text="Answer" />
 
 </RelativeLayout>
