@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
    public override fun onStart() {
        super.onStart()
        // Check if user is signed in (non-null) and update UI accordingly.
-       val currentUser = auth.currentUser
    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

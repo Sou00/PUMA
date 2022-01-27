@@ -1,5 +1,8 @@
 package pl.edu.uj.shop
 
+import android.content.ContentValues
+import android.util.Log
+import android.widget.Toast
 import io.realm.Realm
 import pl.edu.uj.shop.Models.*
 import pl.edu.uj.shop.RealmModels.RealmContactInfo
@@ -47,6 +50,8 @@ object RetrofitHelper {
                 }
             }
             override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                Log.w(ContentValues.TAG, "Loading products failed")
+
             }
         })
 
@@ -71,6 +76,8 @@ object RetrofitHelper {
                 }
             }
             override fun onFailure(call: Call<List<Question>>, t: Throwable) {
+                Log.w(ContentValues.TAG, "Loading questions failed")
+
             }
         })
 
@@ -96,6 +103,8 @@ object RetrofitHelper {
                 }
             }
             override fun onFailure(call: Call<List<ContactInfo>>, t: Throwable) {
+                Log.w(ContentValues.TAG, "Loading contacts failed")
+
             }
         })
 
@@ -120,6 +129,8 @@ object RetrofitHelper {
                 }
             }
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Log.w(ContentValues.TAG, "Loading users failed",t)
+
             }
         })
 
@@ -133,26 +144,10 @@ object RetrofitHelper {
 
         orderCall.enqueue(object : Callback<Order> {
             override fun onResponse(call: Call<Order>, response: Response<Order>) {
-                if (response.code() == 200) {
 
-                }
             }
             override fun onFailure(call: Call<Order>, t: Throwable) {
-            }
-        })
-    }
-
-    fun postUser(user: User){
-        val userService = retrofit.create(UserService::class.java)
-        val userCall = userService.createUser(user)
-
-        userCall.enqueue(object : Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                if (response.code() == 200) {
-
-                }
-            }
-            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.w(ContentValues.TAG, "Posting order failed",t)
             }
         })
     }

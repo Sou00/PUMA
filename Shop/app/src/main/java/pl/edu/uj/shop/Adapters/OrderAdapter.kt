@@ -10,7 +10,6 @@ import io.realm.Realm
 import pl.edu.uj.shop.R
 import pl.edu.uj.shop.RealmModels.RealmOrder
 import pl.edu.uj.shop.RealmModels.RealmProduct
-import pl.edu.uj.shop.RealmModels.RealmUser
 
 class OrderAdapter(private val context: Context,
                    private val dataSource: List<RealmOrder>

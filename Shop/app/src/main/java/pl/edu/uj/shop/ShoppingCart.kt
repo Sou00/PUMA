@@ -26,7 +26,7 @@ class ShoppingCart : AppCompatActivity() {
         orderList = db.where(RealmOrder::class.java).findAll().toMutableList()
         orderAdapter = OrderAdapter(this, orderList)
         listView.adapter = orderAdapter
-        listView.setOnItemClickListener { parent, view, position, id ->
+        listView.setOnItemClickListener { _, _, position, _ ->
             val order = orderAdapter.getItem(position) as RealmOrder
             val productId = order.productId
 
