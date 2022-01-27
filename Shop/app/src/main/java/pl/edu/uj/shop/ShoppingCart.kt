@@ -2,25 +2,29 @@ package pl.edu.uj.shop
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ListView
 import io.realm.Realm
-import io.realm.kotlin.delete
 import pl.edu.uj.shop.Adapters.OrderAdapter
-import pl.edu.uj.shop.Models.Product
+import pl.edu.uj.shop.Models.Order
 import pl.edu.uj.shop.RealmModels.RealmOrder
-import pl.edu.uj.shop.RealmModels.RealmProduct
-import pl.edu.uj.shop.RealmModels.RealmUser
+import pl.edu.uj.shop.RetrofitHelper.postOrder
 
 class ShoppingCart : AppCompatActivity() {
+
+    lateinit var db: Realm
+    lateinit var orderAdapter: OrderAdapter
+    lateinit var orderList: MutableList<RealmOrder>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping_cart)
 
         val listView = findViewById<ListView>(R.id.cartListView)
 
-        val db = Realm.getDefaultInstance()
-        val orderList = db.where(RealmOrder::class.java).findAll().toMutableList()
-        val orderAdapter = OrderAdapter(this, orderList)
+        db = Realm.getDefaultInstance()
+        orderList = db.where(RealmOrder::class.java).findAll().toMutableList()
+        orderAdapter = OrderAdapter(this, orderList)
         listView.adapter = orderAdapter
         listView.setOnItemClickListener { parent, view, position, id ->
             val order = orderAdapter.getItem(position) as RealmOrder
@@ -50,4 +54,25 @@ class ShoppingCart : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.cart_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        orderList.forEach { order ->
+            postOrder(Order(
+                id = order.id,
+                userId = order.userId,
+                productId = order.productId,
+                quantity = order.quantity
+            ))
+        }
+        orderList.clear()
+        db.executeTransaction {
+            db.where(RealmOrder::class.java).findAll().deleteAllFromRealm()
+        }
+        orderAdapter.notifyDataSetChanged()
+        return super.onOptionsItemSelected(item)
+    }
 }

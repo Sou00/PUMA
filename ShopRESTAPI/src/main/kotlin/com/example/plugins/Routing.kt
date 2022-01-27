@@ -12,7 +12,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 
 fun Application.configureRouting() {
-
+var orderId:Int = 1
     routing {
         get {
             call.respondText("Welcome to the main page")
@@ -50,6 +50,8 @@ fun Application.configureRouting() {
                 transaction {
                     Products.deleteWhere { Products.id eq id }
                 }
+                call.respondText("Product deleted correctly", status = HttpStatusCode.OK)
+
             }
         }
         route("/order"){
@@ -71,7 +73,7 @@ fun Application.configureRouting() {
                 val order = call.receive<Order>()
                 transaction {
                     Orders.insert {
-                        it[id] =  order.id
+                        it[id] = orderId++
                         it[userId] = order.userId
                         it[productId] = order.productId
                         it[quantity] = order.quantity
@@ -85,6 +87,8 @@ fun Application.configureRouting() {
                 transaction {
                     Orders.deleteWhere { Orders.id eq id }
                 }
+                call.respondText("Order deleted correctly", status = HttpStatusCode.OK)
+
             }
         }
         route("/user"){
@@ -118,6 +122,8 @@ fun Application.configureRouting() {
                 transaction {
                     Users.deleteWhere { Users.id eq id }
                 }
+                call.respondText("User deleted correctly", status = HttpStatusCode.OK)
+
             }
         }
         route("/contact"){
@@ -152,6 +158,8 @@ fun Application.configureRouting() {
                 transaction {
                     ContactInfos.deleteWhere { ContactInfos.id eq id }
                 }
+                call.respondText("Contact deleted correctly", status = HttpStatusCode.OK)
+
             }
         }
         route("/faq"){
@@ -185,6 +193,8 @@ fun Application.configureRouting() {
                 transaction {
                     Questions.deleteWhere { Questions.id eq id }
                 }
+                call.respondText("Question deleted correctly", status = HttpStatusCode.OK)
+
             }
         }
     }

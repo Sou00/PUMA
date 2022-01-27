@@ -3,26 +3,34 @@ package pl.edu.uj.shop
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
-import android.widget.ListView
+import android.widget.Toast
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import pl.edu.uj.shop.Models.*
-import pl.edu.uj.shop.RealmModels.*
-import pl.edu.uj.shop.Services.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import pl.edu.uj.shop.RetrofitHelper.getCurrentData
+
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var googleSignInClient: GoogleSignInClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
         Realm.init(this)
         val config = RealmConfiguration.Builder()
@@ -31,122 +39,104 @@ class MainActivity : AppCompatActivity() {
             .allowWritesOnUiThread(true)
             .build()
         Realm.setDefaultConfiguration(config)
-    }
-    fun getCurrentData() {
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://661f-46-204-1-140.ngrok.io/")
-            .addConverterFactory(GsonConverterFactory.create())
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
             .build()
-        val productService = retrofit.create(ProductService::class.java)
-        val productCall = productService.getProducts()
 
-        productCall.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                if (response.code() == 200) {
-                    val itemList = response.body()!!
-                    itemList.forEach { item ->
-                        val db = Realm.getDefaultInstance()
-                        db.executeTransactionAsync {
-                            val info = RealmProduct().apply {
-                                this.id = item.id
-                                this.desc = item.desc
-                                this.name = item.name
-                                this.price = item.price
-                            }
-                            it.insertOrUpdate(info)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-            }
-        })
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        val faqService = retrofit.create(FAQService::class.java)
-        val faqCall = faqService.getQuestions()
+        auth = Firebase.auth
 
-        faqCall.enqueue(object : Callback<List<Question>> {
-            override fun onResponse(call: Call<List<Question>>, response: Response<List<Question>>) {
-                if (response.code() == 200) {
-                    val itemList = response.body()!!
-                    itemList.forEach { item ->
-                        val db = Realm.getDefaultInstance()
-                        db.executeTransactionAsync {
-                            val info = RealmQuestion().apply {
-                                this.id = item.id
-                                this.title = item.title
-                                this.response = item.response
-                            }
-                            it.insertOrUpdate(info)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<List<Question>>, t: Throwable) {
-            }
-        })
-
-        val contactService = retrofit.create(ContactService::class.java)
-        val contactCall = contactService.getContacts()
-
-        contactCall.enqueue(object : Callback<List<ContactInfo>> {
-            override fun onResponse(call: Call<List<ContactInfo>>, response: Response<List<ContactInfo>>) {
-                if (response.code() == 200) {
-                    val itemList = response.body()!!
-                    itemList.forEach { item ->
-                        val db = Realm.getDefaultInstance()
-                        db.executeTransactionAsync {
-                            val info = RealmContactInfo().apply {
-                                this.id = item.id
-                                this.name = item.name
-                                this.number = item.number
-                                this.address = item.address
-                            }
-                            it.insertOrUpdate(info)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<List<ContactInfo>>, t: Throwable) {
-            }
-        })
-
-        val userService = retrofit.create(UserService::class.java)
-        val userCall = userService.getUsers()
-
-        userCall.enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                if (response.code() == 200) {
-                    val itemList = response.body()!!
-                    itemList.forEach { item ->
-                        val db = Realm.getDefaultInstance()
-                        db.executeTransactionAsync {
-                            val info = RealmUser().apply {
-                                this.id = item.id
-                                this.name = item.name
-                                this.age = item.age
-                            }
-                            it.insertOrUpdate(info)
-                        }
-                    }
-                }
-            }
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-            }
-        })
-
+        val signInButton = findViewById<SignInButton>(R.id.google_sign_in)
+        signInButton.setOnClickListener{
+            val signInIntent = googleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
 
     }
+   public override fun onStart() {
+       super.onStart()
+       // Check if user is signed in (non-null) and update UI accordingly.
+       val currentUser = auth.currentUser
+   }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+                firebaseAuthWithGoogle(account.idToken!!)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e)
+            }
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithCredential:success")
+                    val intent = Intent(this, MainMenu::class.java)
+                    startActivity(intent)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+
+                }
+            }
+    }
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    companion object {
+        private const val TAG = "GoogleActivity"
+        private const val RC_SIGN_IN = 9001
+    }
     fun loginClicked(view: View) {
-        getCurrentData()
-        val login = findViewById<EditText>(R.id.editTextPersonName)
-        val password = findViewById<EditText>(R.id.editTextPassword)
-        val intent = Intent(this, MainMenu::class.java)
-        startActivity(intent)
+
+      RetrofitHelper.buildRetrofit("https://99da-46-204-0-94.ngrok.io/")
+      getCurrentData()
+        val email = findViewById<EditText>(R.id.login_Email)
+        val password = findViewById<EditText>(R.id.login_Password)
+        if(email.text.toString().trim().isNotEmpty() && password.text.toString().trim().isNotEmpty()) {
+
+            auth.signInWithEmailAndPassword(
+                email.text.trim().toString(),
+                password.text.trim().toString()
+            )
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        val intent = Intent(this, MainMenu::class.java)
+                        startActivity(intent)
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            baseContext, "Authentication failed.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+        }
+
     }
-    fun registerClicked(view: View) {
+    fun goToRegister(view: View) {
         val intent = Intent(this, Register::class.java)
         startActivity(intent)
     }

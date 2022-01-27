@@ -13,24 +13,31 @@
         android:theme="@style/Theme.Shop">
         <activity
             android:name=".ContactList"
+            android:label="Contacts"
             android:exported="false" />
         <activity
             android:name=".FAQList"
+            android:label="FAQ"
             android:exported="false" />
         <activity
             android:name=".MainMenu"
+            android:label="MainMenu"
             android:exported="false" />
         <activity
             android:name=".ShoppingCart"
+            android:label="Your cart"
             android:exported="false" />
         <activity
             android:name=".Register"
+            android:label="Register"
             android:exported="false" />
         <activity
             android:name=".ProductList"
+            android:label="Products"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:label="Login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

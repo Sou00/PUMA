@@ -4,9 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
 import io.realm.Realm
-import pl.edu.uj.shop.Adapters.ProductAdapter
 import pl.edu.uj.shop.Adapters.QuestionAdapter
-import pl.edu.uj.shop.RealmModels.RealmProduct
 import pl.edu.uj.shop.RealmModels.RealmQuestion
 
 class FAQList : AppCompatActivity() {

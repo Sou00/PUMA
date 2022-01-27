@@ -3,6 +3,8 @@ package pl.edu.uj.shop
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +17,7 @@ class MainMenu : AppCompatActivity() {
         startActivity(intent)
     }
     fun logoutClicked(view: android.view.View) {
+        Firebase.auth.signOut()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }

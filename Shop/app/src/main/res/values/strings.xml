@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Shop</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="default_web_client_id" translatable="false">937826423340-m7971hujndo5762g4tha191ne0msn5m6.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">937826423340</string>
+    <string name="google_api_key" translatable="false">AIzaSyAlBbzjL-ju89PUdpqKPKg9QxGZZD7RNT8</string>
+    <string name="google_app_id" translatable="false">1:937826423340:android:5661a3a299e6e304327789</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAlBbzjL-ju89PUdpqKPKg9QxGZZD7RNT8</string>
+    <string name="google_storage_bucket" translatable="false">shop-e73b7.appspot.com</string>
+    <string name="project_id" translatable="false">shop-e73b7</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

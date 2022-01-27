@@ -3,13 +3,10 @@ package pl.edu.uj.shop
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
-import androidx.core.view.get
 import io.realm.Realm
 import pl.edu.uj.shop.Adapters.ProductAdapter
-import pl.edu.uj.shop.Models.Order
 import pl.edu.uj.shop.RealmModels.RealmOrder
 import pl.edu.uj.shop.RealmModels.RealmProduct
-import pl.edu.uj.shop.RealmModels.RealmUser
 
 class ProductList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
