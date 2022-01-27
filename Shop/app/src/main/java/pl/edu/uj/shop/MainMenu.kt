@@ -34,4 +34,8 @@ class MainMenu : AppCompatActivity() {
         val intent = Intent(this, ShoppingCart::class.java)
         startActivity(intent)
     }
+    fun mapClicked(view: android.view.View) {
+        val intent = Intent(this, MapsActivity::class.java)
+        startActivity(intent)
+    }
 }
