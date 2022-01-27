@@ -57,10 +57,18 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-   public override fun onStart() {
-       super.onStart()
-       // Check if user is signed in (non-null) and update UI accordingly.
-   }
+    override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = auth.currentUser
+        if(currentUser == null){
+            Log.w(TAG,"User is null, not going to navigate")
+        }
+        else{
+            startActivity(Intent(this, MainMenu::class.java))
+            finish()
+        }
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -94,10 +102,6 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
-    }
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     companion object {
