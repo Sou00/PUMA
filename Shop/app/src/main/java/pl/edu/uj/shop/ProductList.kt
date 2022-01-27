@@ -19,7 +19,7 @@ class ProductList : AppCompatActivity() {
         val productAdapter = ProductAdapter(this, productList)
         listView.adapter = productAdapter
 
-        listView.setOnItemClickListener { parent, view, position, id ->
+        listView.setOnItemClickListener { _, _, position, _ ->
             val product = productAdapter.getItem(position) as RealmProduct
             val productId = product.id
             val order = db.where(RealmOrder::class.java).equalTo("productId", productId).findFirst()

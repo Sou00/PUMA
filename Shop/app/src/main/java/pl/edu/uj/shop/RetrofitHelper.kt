@@ -144,7 +144,7 @@ object RetrofitHelper {
 
         orderCall.enqueue(object : Callback<Order> {
             override fun onResponse(call: Call<Order>, response: Response<Order>) {
-
+                Log.i(ContentValues.TAG,"Posting order successful")
             }
             override fun onFailure(call: Call<Order>, t: Throwable) {
                 Log.w(ContentValues.TAG, "Posting order failed",t)
